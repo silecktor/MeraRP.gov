@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Сотрудники правительства Цифрового штата San-Andreas | MetaRP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">SAN-ANDREAS <span>GOVERNMENT</span></div>
+    <ul class="nav-links">
+        <li><a href="index.html">Главная</a></li>
+        
+        <li class="dropdown">
+            <a href="#" class="dropbtn">Ветви власти <span class="arrow">▼</span></a>
+            <ul class="dropdown-content">
+                <li><a href="departments.html">Исполнительная власть</a></li>
+                <li><a href="legislative.html">Законодательная власть</a></li>
+                <li><a href="court.html">Судебная власть</a></li>
+            </ul>
+        </li>
+
+        <li><a href="#">Законы</a></li>
+        <li><a href="appeals.html">Заявления</a></li>
+    </ul>
+</nav>
+
+    <div class="section-container">
+        <h1 class="page-title">ЕДИНЫЙ РЕЕСТР СОТРУДНИКОВ ПРАВИТЕЛЬСТВЕННОГО</h1>
+
+        <div id="top-leaders" class="officials-grid" style="margin-bottom: 60px;">
+            </div>
+
+        <hr style="border-color: #00f2ff; opacity: 0.2; margin-bottom: 40px;">
+
+        <div class="filter-controls">
+            <label for="dept-select">ВЫБЕРИТЕ ДЕПАРТАМЕНТ:</label>
+            <select id="dept-select" class="cyber-select">
+                <option value="">-- Нажмите для выбора --</option>
+                <option value="dnb">Департамент Национальной Безопасности</option>
+                <option value="doj">Департамент Юстиции</option>
+                <option value="dob">Департамент Общественного Благополучия</option>
+                <option value="dof">Департамент Финансов</option>
+                <option value="gsa">Государственная Адвокатская Ассациация</option>
+            </select>
+        </div>
+
+        <div id="dept-content">
+            <h2 id="dept-title" class="section-title" style="margin-top: 40px; display: none;"></h2>
+            <div id="staff-grid" class="officials-grid">
+                </div>
+        </div>
+    </div>
+
+    <script src="structure_data.js"></script>
+    <script>
+        const deptSelect = document.getElementById('dept-select');
+        const staffGrid = document.getElementById('staff-grid');
+        const deptTitle = document.getElementById('dept-title');
+        const topLeaders = document.getElementById('top-leaders');
+
+        // Отрисовка высшего руководства сразу
+        topLeaders.innerHTML = structureData.leaders.map(person => `
+            <div class="official-card">
+                <img src="${person.photo}" alt="${person.post}" class="card-photo">
+                <div class="card-info">
+                    <h4>${person.name}</h4>
+                    <p class="post">${person.post}</p>
+                    <p class="id-tag">ID: ${person.id}</p>
+                </div>
+            </div>
+        `).join('');
+
+        // Функция смены департамента
+        deptSelect.addEventListener('change', (e) => {
+            const deptKey = e.target.value;
+            staffGrid.innerHTML = '';
+            
+            if (deptKey && structureData.departments[deptKey]) {
+                const dept = structureData.departments[deptKey];
+                deptTitle.innerText = dept.title;
+                deptTitle.style.display = 'block';
+
+                if (dept.staff.length > 0) {
+                    staffGrid.innerHTML = dept.staff.map(person => `
+                        <div class="official-card animate-fade">
+                            <img src="${person.photo}" alt="${person.post}" class="card-photo">
+                            <div class="card-info">
+                                <h4>${person.name}</h4>
+                                <p class="post">${person.post}</p>
+                                <p class="id-tag">ID: ${person.id}</p>
+                            </div>
+                        </div>
+                    `).join('');
+                } else {
+                    staffGrid.innerHTML = '<p style="padding: 20px;">Информация о составе временно отсутствует или департамент в стадии формирования.</p>';
+                }
+            } else {
+                deptTitle.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
