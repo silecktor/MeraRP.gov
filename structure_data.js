@@ -48,12 +48,18 @@ const structureData = {
             ]
             
         },
-        gas: {
-            title: "Департамент Национальной Безопасности",
+        gsa: {
+            title: "Государственная Адвокатская Ассациация",
             staff: [
-                { name: "Fudo Senko", ID: "1131", post: "Глава Департамента", photo: "images/default.jpg" },
-                { name: "Daniil Volkov", ID: "957", post: "Сотрудник Департамента", photo: "images/default.jpg" }
+                 
             ]
-        }
+        },
+        epd: {
+            title: "Executive Protective Division",
+            staff: [
+                 
+            ]
+        },
+
     }
 };
